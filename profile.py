@@ -76,7 +76,7 @@ for i in range(1, params.clientCount+1):
     node = request.RawPC("node%d" % i-1)
     node.disk_image = params.osImage
     node.hardware_type=params.phystype
-    nfsLan.addInterface(node.addInterface("eth1"))
+    nfsLan.addInterface(node.addInterface()
     # Initialization script for the clients
     node.addService(pg.Execute(shell="sh", command="sudo /bin/bash /local/repository/nfs-client.sh"))
     pass
