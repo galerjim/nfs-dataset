@@ -22,10 +22,7 @@ request = pc.makeRequestRSpec()
 
 # Only Ubuntu images supported.
 imageList = [
-    ('urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU18-64-STD', 'UBUNTU 18.04'),
-    ('urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU16-64-STD', 'UBUNTU 16.04'),
-    ('urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU14-64-STD', 'UBUNTU 14.04'),
-    ('urn:publicid:IDN+emulab.net+image+emulab-ops//CENTOS7-64-STD', 'CENTOS 7'),
+    ('urn:publicid:IDN+wisc.cloudlab.us+image+powerbound-PG0:gpu.node0', 'MPI+CUDA'),    
 ]
 
 # Do not change these unless you change the setup scripts too.
@@ -60,7 +57,7 @@ nfsServer.addService(pg.Execute(shell="sh", command="sudo /bin/bash /local/repos
 
 # Special node that represents the ISCSI device where the dataset resides
 dsnode = request.RemoteBlockstore("dsnode", nfsDirectory)
-dsnode.dataset = "urn:publicid:IDN+emulab.net:portalprofiles+ltdataset+DemoDataset"
+dsnode.dataset = "urn:publicid:IDN+wisc.cloudlab.us:powerbound-pg0+ltdataset+zou_data"
 
 # Link between the nfsServer and the ISCSI device that holds the dataset
 dslink = request.Link("dslink")
