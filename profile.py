@@ -34,6 +34,11 @@ nfsDirectory  = "/nfs"
 pc.defineParameter("clientCount", "Number of NFS clients",
                    portal.ParameterType.INTEGER, 2)
 
+pc.defineParameter("phystype",  "Optional physical node type",
+                   portal.ParameterType.STRING, "c240g5",
+                   longDescription="Specify a physical node type (pc3000,d710,etc) " +
+                   "instead of letting the resource mapper choose for you.")
+
 pc.defineParameter("osImage", "Select OS image",
                    portal.ParameterType.IMAGE,
                    imageList[0], imageList)
