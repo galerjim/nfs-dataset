@@ -22,7 +22,7 @@ request = pc.makeRequestRSpec()
 
 # Only Ubuntu images supported.
 imageList = [
-    ('urn:publicid:IDN+wisc.cloudlab.us+image+powerbound-PG0:gpu.node0', 'MPI+CUDA'),    
+    ('urn:publicid:IDN+wisc.cloudlab.us+image+powerbound-PG0:gpu.node0', 'MPI+CUDA') 
 ]
 
 # Do not change these unless you change the setup scripts too.
