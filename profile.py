@@ -36,7 +36,7 @@ pc.defineParameter("clientCount", "Number of NFS clients",
 
 pc.defineParameter("osImage", "Select OS image",
                    portal.ParameterType.IMAGE,
-                   imageList[2], imageList)
+                   imageList[0], imageList)
 
 # Always need this when using parameters
 params = pc.bindParameters()
