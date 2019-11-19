@@ -35,9 +35,7 @@ pc.defineParameter("clientCount", "Number of NFS clients",
                    portal.ParameterType.INTEGER, 2)
 
 pc.defineParameter("phystype",  "Optional physical node type",
-                   portal.ParameterType.STRING, "c240g5",
-                   longDescription="Specify a physical node type (pc3000,d710,etc) " +
-                   "instead of letting the resource mapper choose for you.")
+                   portal.ParameterType.STRING, "c240g5")
 
 pc.defineParameter("osImage", "Select OS image",
                    portal.ParameterType.IMAGE,
@@ -77,6 +75,7 @@ dslink.link_multiplexing = True
 for i in range(1, params.clientCount+1):
     node = request.RawPC("node%d" % i)
     node.disk_image = params.osImage
+    node.hardware_type=params.phystype
     nfsLan.addInterface(node.addInterface())
     # Initialization script for the clients
     node.addService(pg.Execute(shell="sh", command="sudo /bin/bash /local/repository/nfs-client.sh"))
