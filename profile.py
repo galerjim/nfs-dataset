@@ -54,7 +54,7 @@ nfsLan.link_multiplexing = True
 nfsServer = request.RawPC(nfsServerName)
 nfsServer.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU16-64-STD'
 # Attach server to lan.
-nfsLan.addInterface(nfsServer.addInterface())
+nfsLan.addInterface(nfsServer.addInterface("eth1"))
 # Initialization script for the server
 nfsServer.addService(pg.Execute(shell="sh", command="sudo /bin/bash /local/repository/nfs-server.sh"))
 
@@ -65,7 +65,7 @@ dsnode.dataset = "urn:publicid:IDN+wisc.cloudlab.us:powerbound-pg0+ltdataset+zou
 # Link between the nfsServer and the ISCSI device that holds the dataset
 dslink = request.Link("dslink")
 dslink.addInterface(dsnode.interface)
-dslink.addInterface(nfsServer.addInterface())
+dslink.addInterface(nfsServer.addInterface("eth2"))
 # Special attributes for this link that we must use.
 dslink.best_effort = True
 dslink.vlan_tagging = True
