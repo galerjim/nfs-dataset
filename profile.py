@@ -52,7 +52,7 @@ nfsLan.link_multiplexing = True
 
 # The NFS server.
 nfsServer = request.RawPC(nfsServerName)
-nfsServer.disk_image = params.osImage
+nfsServer.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU16-64-STD'
 # Attach server to lan.
 nfsLan.addInterface(nfsServer.addInterface())
 # Initialization script for the server
@@ -73,10 +73,10 @@ dslink.link_multiplexing = True
 
 # The NFS clients, also attached to the NFS lan.
 for i in range(1, params.clientCount+1):
-    node = request.RawPC("node%d" % i-1)
+    node = request.RawPC("n%02d" % i)
     node.disk_image = params.osImage
     node.hardware_type=params.phystype
-    nfsLan.addInterface(node.addInterface()
+    nfsLan.addInterface(node.addInterface("eth1")
     # Initialization script for the clients
     node.addService(pg.Execute(shell="sh", command="sudo /bin/bash /local/repository/nfs-client.sh"))
     pass
