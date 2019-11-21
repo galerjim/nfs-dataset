@@ -22,7 +22,7 @@ request = pc.makeRequestRSpec()
 
 # Only Ubuntu images supported.
 imageList = [
-    ('urn:publicid:IDN+wisc.cloudlab.us+image+powerbound-PG0:gpu.node0', 'MPI+CUDA') 
+    ('urn:publicid:IDN+wisc.cloudlab.us+image+powerbound-PG0:mpi_cuda', 'MPI+CUDA') 
 ]
 
 # Do not change these unless you change the setup scripts too.
@@ -50,11 +50,22 @@ nfsLan.best_effort       = True
 nfsLan.vlan_tagging      = True
 nfsLan.link_multiplexing = True
 
+# The NFS clients, also attached to the NFS lan.
+for i in range(1, params.clientCount+1):
+    node = request.RawPC("n%02d" % i)
+    node.disk_image = params.osImage
+    node.hardware_type=params.phystype
+    nfsLan.addInterface(node.addInterface())
+    # Initialization script for the clients
+    node.addService(pg.Execute(shell="sh", command="sudo /bin/bash /local/repository/nfs-client.sh"))
+    pass
+
 # The NFS server.
 nfsServer = request.RawPC(nfsServerName)
+nfsServer.hardware_type = "c240g2"
 nfsServer.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU16-64-STD'
 # Attach server to lan.
-nfsLan.addInterface(nfsServer.addInterface("eth1"))
+nfsLan.addInterface(nfsServer.addInterface())
 # Initialization script for the server
 nfsServer.addService(pg.Execute(shell="sh", command="sudo /bin/bash /local/repository/nfs-server.sh"))
 
@@ -65,20 +76,11 @@ dsnode.dataset = "urn:publicid:IDN+wisc.cloudlab.us:powerbound-pg0+ltdataset+zou
 # Link between the nfsServer and the ISCSI device that holds the dataset
 dslink = request.Link("dslink")
 dslink.addInterface(dsnode.interface)
-dslink.addInterface(nfsServer.addInterface("eth2"))
+dslink.addInterface(nfsServer.addInterface())
 # Special attributes for this link that we must use.
 dslink.best_effort = True
 dslink.vlan_tagging = True
 dslink.link_multiplexing = True
-
-# The NFS clients, also attached to the NFS lan.
-for i in range(1, params.clientCount+1):
-    node = request.RawPC("n%02d" % i)
-    node.disk_image = params.osImage
-    node.hardware_type=params.phystype
-    nfsLan.addInterface(node.addInterface("eth1"))
-    # Initialization script for the clients
-    node.addService(pg.Execute(shell="sh", command="sudo /bin/bash /local/repository/nfs-client.sh"))
 
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
