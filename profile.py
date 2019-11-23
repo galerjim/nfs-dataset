@@ -62,8 +62,8 @@ for i in range(1, params.clientCount+1):
 
 # The NFS server.
 nfsServer = request.RawPC(nfsServerName)
-nfsServer.hardware_type = "c240g2"
-nfsServer.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU16-64-STD'
+nfsServer.hardware_type = params.phystype
+nfsServer.disk_image = params.osImage
 # Attach server to lan.
 nfsLan.addInterface(nfsServer.addInterface())
 # Initialization script for the server
