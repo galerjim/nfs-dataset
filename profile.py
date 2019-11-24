@@ -22,7 +22,7 @@ request = pc.makeRequestRSpec()
 
 # Only Ubuntu images supported.
 imageList = [
-    ('urn:publicid:IDN+wisc.cloudlab.us+image+powerbound-PG0:mpi_cuda', 'MPI+CUDA') 
+    ('urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU18-64-STD', 'UBUNTU 18.04'),
 ]
 
 # Do not change these unless you change the setup scripts too.
